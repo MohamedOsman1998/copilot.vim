@@ -236,9 +236,11 @@ function! s:SuggestionTextWithAdjustments() abort
       let leading = matchstr(choice_text, '^\s\+')
       let unindented = strpart(choice_text, len(leading))
       if strpart(typed, 0, len(leading)) == leading && unindented !=# delete
+        let g:copilot_comp_text_latest = unindented
         return [unindented, len(typed) - len(leading), strchars(delete), choice]
       endif
     elseif typed ==# strpart(choice_text, 0, offset)
+      let g:copilot_comp_text_latest = strpart(choice_text, offset)
       return [strpart(choice_text, offset), 0, strchars(delete), choice]
     endif
   catch
